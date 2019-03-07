@@ -602,7 +602,7 @@ class Instagram
             if (static::HTTP_OK !== $response->code) {
                 throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
             }
-            $cookies = static::parseCookies($response->headers['Set-Cookie']);
+            $cookies = static::parseCookies($response->headers['set-cookie']);
             $this->userSession['csrftoken'] = $cookies['csrftoken'];
             $jsonResponse = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
             $nodes = $jsonResponse['data']['shortcode_media']['edge_media_to_comment']['edges'];
@@ -691,7 +691,7 @@ class Instagram
             if ($response->code !== 200) {
                 throw new InstagramException('Response code is ' . $response->code . '. Body: ' . $response->body . ' Something went wrong. Please report issue.');
             }
-            $cookies = self::parseCookies($response->headers['Set-Cookie']);
+            $cookies = self::parseCookies($response->headers['set-cookie']);
             $this->userSession['csrftoken'] = $cookies['csrftoken'];
             $jsonResponse = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
 
@@ -780,7 +780,7 @@ class Instagram
                 throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
             }
 
-            $cookies = static::parseCookies($response->headers['Set-Cookie']);
+            $cookies = static::parseCookies($response->headers['set-cookie']);
             $this->userSession['csrftoken'] = $cookies['csrftoken'];
             $arr = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
             if (!is_array($arr)) {
@@ -839,7 +839,7 @@ class Instagram
             throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
         }
 
-        $cookies = static::parseCookies($response->headers['Set-Cookie']);
+        $cookies = static::parseCookies($response->headers['set-cookie']);
         $this->userSession['csrftoken'] = $cookies['csrftoken'];
 
         $arr = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
@@ -893,7 +893,7 @@ class Instagram
         if ($response->code !== 200) {
             throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
         }
-        $cookies = static::parseCookies($response->headers['Set-Cookie']);
+        $cookies = static::parseCookies($response->headers['set-cookie']);
         $this->userSession['csrftoken'] = $cookies['csrftoken'];
         $jsonResponse = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
         $medias = [];
@@ -921,7 +921,7 @@ class Instagram
         if ($response->code !== 200) {
             throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
         }
-        $cookies = static::parseCookies($response->headers['Set-Cookie']);
+        $cookies = static::parseCookies($response->headers['set-cookie']);
         $this->userSession['csrftoken'] = $cookies['csrftoken'];
         $jsonResponse = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
         $nodes = $jsonResponse['location']['top_posts']['nodes'];
@@ -951,7 +951,7 @@ class Instagram
             if ($response->code !== 200) {
                 throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
             }
-            $cookies = static::parseCookies($response->headers['Set-Cookie']);
+            $cookies = static::parseCookies($response->headers['set-cookie']);
             $this->userSession['csrftoken'] = $cookies['csrftoken'];
             $arr = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
             $nodes = $arr['location']['media']['nodes'];
@@ -988,7 +988,7 @@ class Instagram
         if ($response->code !== 200) {
             throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.');
         }
-        $cookies = static::parseCookies($response->headers['Set-Cookie']);
+        $cookies = static::parseCookies($response->headers['set-cookie']);
         $this->userSession['csrftoken'] = $cookies['csrftoken'];
         $jsonResponse = json_decode($response->raw_body, true, 512, JSON_BIGINT_AS_STRING);
         return Location::create($jsonResponse['location']);
@@ -1205,7 +1205,7 @@ class Instagram
 			if(isset($match[1])) {
 				$csrfToken = $match[1];
 			}
-			$cookies = static::parseCookies($response->headers['Set-Cookie']);
+			$cookies = static::parseCookies($response->headers['set-cookie']);
             $mid = $cookies['mid'];
             $headers = ['cookie' => "csrftoken=$csrfToken; mid=$mid;",
                 'referer' => Endpoints::BASE_URL . '/',
@@ -1230,7 +1230,7 @@ class Instagram
                 }
             }
 
-            $cookies = static::parseCookies($response->headers['Set-Cookie']);
+            $cookies = static::parseCookies($response->headers['set-cookie']);
             $cookies['mid'] = $mid;
             $cachedString->set($cookies);
             static::$instanceCache->save($cachedString);
@@ -1262,7 +1262,7 @@ class Instagram
         if ($response->code !== 200) {
             return false;
         }
-        $cookies = static::parseCookies($response->headers['Set-Cookie']);
+        $cookies = static::parseCookies($response->headers['set-cookie']);
         if (!isset($cookies['ds_user_id'])) {
             return false;
         }
@@ -1277,7 +1277,7 @@ class Instagram
      */
     private function verifyTwoStep($response, $cookies)
     {
-        $new_cookies = static::parseCookies($response->headers['Set-Cookie']);
+        $new_cookies = static::parseCookies($response->headers['set-cookie']);
         $cookies = array_merge($cookies, $new_cookies);
         $cookie_string = '';
         foreach ($cookies as $name => $value) {
